@@ -117,14 +117,15 @@ class PhpErrorParser(BaseParser):
 
 class ApacheAccessParser(BaseParser):
     date_format = "%d/%b/%Y:%H:%M:%S"
-    date_ignore_pattern = r' -\d{4}'
+    date_ignore_pattern = r' \+\d{4}'
     pattern = ''.join([
-            r'^',
-            r'(?P<ip>(?:\d+\.){3}\d+) ',
-            r'.* ',
-            r'.* ',
-            r'\[(?P<time>\d+/\w{3}/\d{4}:\d{2}:\d{2}:\d{2} -\d{4})\] ',
-            ])
+        r'(?P<ip>(?:\d+\.){3}\d+)',
+        r'.+\[(?P<time>\d+/\w{3}/\d{4}:\d{2}:\d{2}:\d{2} \+\d{4})\]',
+        r'.+"(?:(?P<type>GET|POST) (?P<url>.+) HTTP/\d\.\d)"',
+        r' (?P<status>\d{3}) \d+',
+        r' "(?P<refer>[^ ]+)"',
+        r' "(?P<ua>[^"]+)"'
+    ])
 
 
 class SyslogParser(BaseParser):

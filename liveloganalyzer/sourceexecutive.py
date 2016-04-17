@@ -1,4 +1,6 @@
 import time
+from datetime import date
+from os import path
 from threading import Thread
 from pymongo import Connection
 from pymongo.errors import CollectionInvalid, InvalidStringData
@@ -27,16 +29,17 @@ class SourceExecutive(object):
 
     def start(self):
         self.start_source_stream()
-        self.connect_to_mongo()
-        self.store_data()
+        # self.connect_to_mongo()
+        self.store_data_local()
 
     def start_source_stream(self):
         self.source = self.source_class(**self.kwargs)
         self.source.start_stream()
 
     def connect_to_mongo(self):
-        conn = Connection()
+        conn = Connection("192.168.99.100", 27017)
         db = conn[MONGODB_NAME]
+        self.mongo = db[self.collection]
         try:
             self.mongo = db.create_collection(
                 self.collection, capped=True,
@@ -57,6 +60,14 @@ class SourceExecutive(object):
             else:
                 error("%s couldn't parse line:\n%s" % (str(self.parser), line))
 
+    def store_data_local(self):
+        today_log_file = date.today().isoformat() + '.log'
+        fd = open(today_log_file, 'a')
+        while True:
+            line = self.source.get_line()
+            data = self.parser.parse_line(line)
+            if data:
+                fd.write("%s||%s||%s||%s||%s||%s||%s\n" % (data['ip'], data['time'], data['type'], data['url'], data['status'], data['refer'], data['ua']))
 
 if __name__ == '__main__':
     main()

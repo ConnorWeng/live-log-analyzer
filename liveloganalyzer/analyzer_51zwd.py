@@ -29,6 +29,7 @@ class Analyzer51zwd(object):
                 rs = self.cursor.fetchone()
                 if rs:
                     store_id = rs[0]
+                    print "store %s +1" % store_id
                     if self.stores.has_key(store_id):
                         self.stores[store_id] = self.stores[store_id] + 1
                     else:

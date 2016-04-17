@@ -61,7 +61,7 @@ class SourceExecutive(object):
                 error("%s couldn't parse line:\n%s" % (str(self.parser), line))
 
     def store_data_local(self):
-        today_log_file = date.today().isoformat() + '.log'
+        today_log_file = './logs/' + date.today().isoformat() + '.log'
         fd = open(today_log_file, 'a')
         while True:
             line = self.source.get_line()

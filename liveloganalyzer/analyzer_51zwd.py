@@ -24,7 +24,7 @@ class Analyzer51zwd(object):
             m = self.regex.search(url)
             if m:
                 goods_id = m.groupdict()['goods_id']
-                goods_id = goods_id[len(goods_id) - 1]
+                # goods_id = goods_id[len(goods_id) - 1]
                 self.cursor.execute("select store_id from ecm_goods where goods_id = " + goods_id)
                 rs = self.cursor.fetchone()
                 if rs:

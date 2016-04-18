@@ -122,7 +122,7 @@ class ApacheAccessParser(BaseParser):
         r'(?P<ip>(?:\d+\.){3}\d+)',
         r'.+\[(?P<time>\d+/\w{3}/\d{4}:\d{2}:\d{2}:\d{2} \+\d{4})\]',
         r'.+"(?:(?P<type>GET|POST) (?P<url>.+) HTTP/\d\.\d)"',
-        r' (?P<status>\d{3}) \d+',
+        r' (?P<status>\d{3}) [\d-]+',
         r' "(?P<refer>[^ ]+)"',
         r' "(?P<ua>[^"]+)"'
     ])

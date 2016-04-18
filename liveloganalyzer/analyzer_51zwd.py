@@ -13,7 +13,7 @@ class Analyzer51zwd(object):
         self.cursor = self.db.cursor()
         self.today = date.today().isoformat()
         self.stores = dict()
-        self.regex = re.compile(r'/goods/(?P<goods_id>\d+)')
+        self.regex = re.compile(r'/index.php\?app=item_upload&dest=.+&goods_id=(?P<goods_id>\d+)')
 
     def yjsc_count(self):
         today_log_file = './logs/' + self.today + '.log'

@@ -1,5 +1,5 @@
 import re
-from datetime import date
+from datetime import date, timedelta
 from MySQLdb import connect
 from settings import MY_HOST, MY_USER, MY_PASS, MY_DB
 
@@ -11,7 +11,7 @@ class Analyzer51zwd(object):
                           passwd = MY_PASS,
                           db = MY_DB)
         self.cursor = self.db.cursor()
-        self.today = date.today().isoformat()
+        self.today = (date.today() - timedelta(1)).isoformat()
         self.stores = dict()
         self.regex = re.compile(r'/index.php\?app=item_upload&dest=.+&goods_id=(?P<goods_id>\d+)')
 
